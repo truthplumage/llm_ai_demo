@@ -13,10 +13,12 @@ public class ChatService {
 
 	private final ChatModel chatModel;
 
+	// 단건 질의에 대한 동기 응답 전달
 	public ChatResult chat(String message) {
 		return chatModel.chat(new ChatMessage(message));
 	}
 
+	// SSE 스트리밍에 사용되는 토큰 Flux 반환
 	public Flux<String> stream(String message) {
 		return chatModel.stream(new ChatMessage(message));
 	}

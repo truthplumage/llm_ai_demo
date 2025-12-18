@@ -1,12 +1,14 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   application:
     name: demo
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY:changeme}
-      base-url: https://api.openai.com/v1
+      api-key: ${OPENAI_API_KEY}
+      base-url: https://api.openai.com/
       chat:
         options:
-          model: gpt-4o-nano
+          model: gpt-4o-mini # OpenAI에서 지원하는 경량 4o 모델
           temperature: 0.6
           max-tokens: 256
