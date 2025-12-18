@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: demo
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:changeme}
+      base-url: https://api.openai.com/v1
+      chat:
+        options:
+          model: gpt-4o-nano
+          temperature: 0.6
+          max-tokens: 256
