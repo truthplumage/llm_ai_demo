@@ -14,3 +14,12 @@ spring:
           # 중간 값(0.4~0.7): 적당한 변주를 허용하면서도 안정성을 유지. 안내/추천형 챗봇에 무난.
           # 높은 값(0.7~1.0): 더 창의적이고 다양하지만 일관성·사실성이 떨어질 수 있음. 아이디어 브레인스토밍이나 문구 생성 등에 사용.
           temperature: 0.6
+          max-tokens: 256
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/test}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always # 개발환경에서 schema.sql 자동 실행
