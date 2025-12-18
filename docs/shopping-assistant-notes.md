@@ -34,13 +34,13 @@
       private final JdbcTemplate jdbcTemplate;
 
       public void index(Product p) {
-          String text = "%s %s %s".formatted(p.getName(), p.getCategory(), p.getDescription());
-          List<Double> vec = embeddingModel.embed(text).getResult().getOutput();
+          String text = "%s %s status:%s stock:%s".formatted(p.getName(), p.getDescription(), p.getStatus(), p.getStock());
+          float[] vec = embeddingModel.embed(text);
           jdbcTemplate.update("UPDATE product SET embedding = ? WHERE id = ?", toPgVector(vec), p.getId());
       }
 
-      private Object toPgVector(List<Double> v) {
-          return new SqlParameterValue(Types.OTHER, v.toString()); // '[...]'
+      private Object toPgVector(float[] v) {
+          return new SqlParameterValue(Types.OTHER, Arrays.toString(v)); // '[...]'
       }
   }
   ```
@@ -53,3 +53,4 @@
   LIMIT 5;
   ```
 - **프롬프트 주입**: 검색 결과의 이름/가격/설명을 리스트로 만들어 “아래 정보만 활용해 답하라” 같은 시스템 메시지에 포함시킨 뒤 LLM 호출.
+- **Spring AI 임베딩 반환 타입**: 1.0.0-M4 기준 `EmbeddingModel.embed(String)`은 `float[]`를 반환하므로 pgvector 파라미터로 넘길 때는 `Arrays.toString()` 형태(`[0.1, 0.2, ...]`)로 문자열화해 `SqlParameterValue(Types.OTHER, ...)`로 전달한다.
