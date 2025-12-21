@@ -6,7 +6,7 @@
 set -euo pipefail
 
 CONTAINER_NAME=${CONTAINER_NAME:-pgvector}
-IMAGE=${IMAGE:-ankane/pgvector:pg16}
+IMAGE=${IMAGE:-ankane/pgvector:latest}
 PORT=${PORT:-5432}
 
 POSTGRES_USER=${POSTGRES_USER:-postgres}
