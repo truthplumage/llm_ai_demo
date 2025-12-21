@@ -1,5 +1,6 @@
 package com.example.demo.product.infrastructure;
 
+import com.example.demo.product.domain.Product;
 import com.example.demo.product.domain.ProductSearchResult;
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -15,6 +16,23 @@ public class ProductRepository {
 
 	private final JdbcTemplate jdbcTemplate;
 
+	public List<Product> findAll() {
+		return jdbcTemplate.query(
+			"""
+			SELECT id, seller_id, name, description, price, stock, status
+			FROM product
+			""",
+			(rs, rowNum) -> new Product(
+				rs.getObject("id", UUID.class),
+				rs.getObject("seller_id", UUID.class),
+				rs.getString("name"),
+				rs.getString("description"),
+				rs.getBigDecimal("price"),
+				rs.getInt("stock"),
+				rs.getString("status"))
+		);
+	}
+
 	public void updateEmbedding(UUID productId, SqlParameterValue vector) {
 		jdbcTemplate.update(connection -> {
 			PreparedStatement ps = connection.prepareStatement("UPDATE product SET embedding = ? WHERE id = ?");
@@ -29,6 +47,7 @@ public class ProductRepository {
 			"""
 			SELECT id, name, description, price, stock, status, embedding <=> ? AS score
 			FROM product
+			WHERE status = 'ACTIVE' AND stock > 0
 			ORDER BY embedding <=> ?
 			LIMIT ?
 			""",

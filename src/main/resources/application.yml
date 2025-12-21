@@ -16,10 +16,10 @@ spring:
           temperature: 0.6
           max-tokens: 256
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/test}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/postgres}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
   sql:
     init:
-      mode: always # 개발환경에서 schema.sql 자동 실행
+      mode: always # 개발환경에서 sql 자동 실행
