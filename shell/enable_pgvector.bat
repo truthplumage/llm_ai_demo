@@ -2,7 +2,11 @@
 setlocal
 
 rem 기존 Postgres 컨테이너에 pgvector 확장을 설치/생성 (Windows CMD)
+rem 사용법: 컨테이너가 실행 중이어야 하며, 필요 시 INSTALL_PGVECTOR=1 로 패키지 설치
+rem 예) set CONTAINER_NAME=pgvector && set INSTALL_PGVECTOR=1 && call enable_pgvector.bat
 rem 환경변수: CONTAINER_NAME, POSTGRES_USER, POSTGRES_DB, PG_MAJOR, INSTALL_PGVECTOR(=1 시 apt 설치 시도)
+rem 기본값: CONTAINER_NAME=pgvector, POSTGRES_USER=postgres, POSTGRES_DB=postgres, PG_MAJOR=16
+rem 필요 도구: Docker Desktop 실행 상태, 컨테이너 내부 apt 사용 가능(옵션)
 
 if not defined CONTAINER_NAME set "CONTAINER_NAME=pgvector"
 if not defined POSTGRES_USER set "POSTGRES_USER=postgres"

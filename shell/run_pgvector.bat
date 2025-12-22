@@ -2,7 +2,10 @@
 setlocal
 
 rem pgvector 컨테이너 실행 (Windows CMD)
-rem 환경변수로 조정: CONTAINER_NAME, IMAGE, PORT, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
+rem 사용법: 환경변수를 설정한 뒤 run_pgvector.bat 실행
+rem 예) set PORT=55432 && set POSTGRES_PASSWORD=pass && call run_pgvector.bat
+rem 기본값: CONTAINER_NAME=pgvector, IMAGE=ankane/pgvector:latest, PORT=5432, USER/PW/DB=postgres
+rem 필요 도구: Docker Desktop 실행 상태
 
 if not defined CONTAINER_NAME set "CONTAINER_NAME=pgvector"
 if not defined IMAGE set "IMAGE=ankane/pgvector:latest"
